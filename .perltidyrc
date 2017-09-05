@@ -1,0 +1,5 @@
+
+## Perl Best Practices
+-pbp -nst
+
+-ci=2   # Continuation indent is 2 cols
