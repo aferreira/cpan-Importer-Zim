@@ -9,10 +9,25 @@ sub import {
     shift->backend(@_)->import(@_);
 }
 
+my %MIN_VERSION = do {
+    my %v = ( '+lexical' => '0.2.0', );
+    /^\+/ and $v{ backend_class($_) } = $v{$_} for keys %v;
+    %v;
+};
+
+sub backend_class {
+    my $how = shift;
+    return ( $how =~ s/^\+// )
+      ? ( __PACKAGE__ . '::' . ucfirst($how) )
+      : $how;
+}
+
 sub backend {
-    my $how = ( ref $_[2] ? $_[2]->{-how} : undef ) // 'lexical';
-    my $backend = __PACKAGE__ . '::' . ucfirst($how);
-    return Module::Runtime::use_module($backend);
+    my $how = ( ref $_[2] ? $_[2]->{-how} : undef ) // '+lexical';
+    my $backend = backend_class($how);
+    my @version
+      = exists $MIN_VERSION{$backend} ? ( $MIN_VERSION{$backend} ) : ();
+    return &Module::Runtime::use_module( $backend, @version );
 }
 
 1;
@@ -27,6 +42,8 @@ Importer::Zim - Import functions à la Invader Zim
 
     use Importer::Zim 'Scalar::Util' => 'blessed';
     use Importer::Zim 'Scalar::Util' => 'blessed' => { -as => 'typeof' };
+
+    use Importer::Zim 'Mango::BSON' => ':bson';
 
     use Importer::Zim 'Foo' => { -version => '3.0' } => 'foo';
 
