@@ -10,7 +10,7 @@ sub import {
 }
 
 my %MIN_VERSION = do {
-    my %v = ( '+lexical' => '0.2.0', );
+    my %v = ( '+Lexical' => '0.2.0', );
     /^\+/ and $v{ backend_class($_) } = $v{$_} for keys %v;
     %v;
 };
@@ -18,12 +18,12 @@ my %MIN_VERSION = do {
 sub backend_class {
     my $how = shift;
     return ( $how =~ s/^\+// )
-      ? ( __PACKAGE__ . '::' . ucfirst($how) )
+      ? ( __PACKAGE__ . '::' . $how )
       : $how;
 }
 
 sub backend {
-    my $how = ( ref $_[2] ? $_[2]->{-how} : undef ) // '+lexical';
+    my $how = ( ref $_[2] ? $_[2]->{-how} : undef ) // '+Lexical';
     my $backend = backend_class($how);
     my @version
       = exists $MIN_VERSION{$backend} ? ( $MIN_VERSION{$backend} ) : ();

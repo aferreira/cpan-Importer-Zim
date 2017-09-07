@@ -1,7 +1,7 @@
 
 Release history for Importer-Zim
 
-    - Support pluggable importer, like '+lexical' or 'Importer::Zim::Lexical'
+    - Support pluggable importer, like '+Lexical' or 'Importer::Zim::Lexical'
     - Require minimum version for Importer::Zim::Lexical
 
 v0.0  2017-09-02
