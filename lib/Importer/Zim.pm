@@ -54,4 +54,10 @@ Importer::Zim - Import functions à la Invader Zim
     Importer::Zim->import($class => $export);
     Importer::Zim->import($class => \%opts => $export);
 
+=head1 SEE ALSO
+
+L<Importer> and L<Lexical::Importer>
+
+L<lexically>
+
 =cut
