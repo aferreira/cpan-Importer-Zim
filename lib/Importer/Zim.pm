@@ -72,6 +72,8 @@ a behavior akin to L<Exporter> without the corresponding package polution.
 
 =head1 SEE ALSO
 
+L<zim>
+
 L<Importer> and L<Lexical::Importer>
 
 L<lexically>
