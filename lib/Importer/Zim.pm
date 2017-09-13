@@ -47,12 +47,28 @@ Importer::Zim - Import functions à la Invader Zim
 
     use Importer::Zim 'Foo' => { -version => '3.0' } => 'foo';
 
+=head1 DESCRIPTION
+
+This pragma imports subroutines from other modules in a clean way.
+"Clean imports" here mean that the import symbols are available
+only at some scope.
+
+L<Importer::Zim> relies on pluggable backends which give a precise
+meaning to "available at some scope". For example,
+L<Importer::Zim::Lexical> creates lexical subs that go away
+as soon the lexical scope ends.
+
+By default, L<Importer::Zim> looks at package variables
+C<@EXPORT>, C<@EXPORT_OK> and C<%EXPORT_TAGS> to decide
+what are exportable subroutines. It tries its best to implement
+a behavior akin to L<Exporter> without the corresponding package polution.
+
 =head1 METHODS
 
 =head2 import
 
-    Importer::Zim->import($class => $export);
-    Importer::Zim->import($class => \%opts => $export);
+    Importer::Zim->import($class => @imports);
+    Importer::Zim->import($class => \%opts => @imports);
 
 =head1 SEE ALSO
 
