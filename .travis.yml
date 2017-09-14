@@ -1,0 +1,13 @@
+language: perl
+perl:
+    - "5.26"
+    - "5.24"
+    - "5.22"
+    - "5.20"
+    - "5.18"
+install:
+    - cpanm -q --notest Dist::Zilla
+    - dzil authordeps --missing | cpanm -q --notest
+    - dzil listdeps --author --missing | cpanm -q --notest
+script:
+    - dzil test --all
