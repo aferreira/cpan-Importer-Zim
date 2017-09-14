@@ -6,13 +6,11 @@ BEGIN {
 
 package zim;
 
+# ABSTRACT: Import functions à la Invader Zim
+
 1;
 
 =encoding utf8
-
-=head1 NAME
-
-zim - Import functions à la Invader Zim
 
 =head1 SYNOPSIS
 

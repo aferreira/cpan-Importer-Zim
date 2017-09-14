@@ -1,6 +1,8 @@
 
 package Importer::Zim;
 
+# ABSTRACT: Import functions à la Invader Zim
+
 use 5.018;
 use warnings;
 use Module::Runtime ();
@@ -33,10 +35,6 @@ sub backend {
 1;
 
 =encoding utf8
-
-=head1 NAME
-
-Importer::Zim - Import functions à la Invader Zim
 
 =head1 SYNOPSIS
 
