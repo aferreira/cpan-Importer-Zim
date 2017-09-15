@@ -17,7 +17,11 @@ package zim;
     use zim 'Scalar::Util' => 'blessed';
     use zim 'Scalar::Util' => 'blessed' => { -as => 'typeof' };
 
+    use Importer::Zim 'Mango::BSON' => ':bson';
+
     use zim 'Foo' => { -version => '3.0' } => 'foo';
+
+    use zim 'Krazy::Taco' => qw(tacos burritos poop);
 
 =head1 DESCRIPTION
 

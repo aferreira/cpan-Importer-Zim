@@ -45,6 +45,8 @@ sub backend {
 
     use Importer::Zim 'Foo' => { -version => '3.0' } => 'foo';
 
+    use Importer::Zim 'SpaceTime::Machine' => 'robot', 'rubber_pig';
+
 =head1 DESCRIPTION
 
 This pragma imports subroutines from other modules in a clean way.
