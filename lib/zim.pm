@@ -25,6 +25,9 @@ package zim;
 
 =head1 DESCRIPTION
 
+    "The rightful order has been restored."
+      – Gaz
+
 L<zim> is an alias to L<Importer::Zim>.
 
 =cut
