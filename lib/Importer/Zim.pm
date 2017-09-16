@@ -49,6 +49,10 @@ sub backend {
 
 =head1 DESCRIPTION
 
+   "Because, when you create a giant monster of doom,
+   no matter how cute, you have to... you have to... I don't know."
+     – Zim
+
 This pragma imports subroutines from other modules in a clean way.
 "Clean imports" here mean that the import symbols are available
 only at some scope.
