@@ -65,7 +65,7 @@ as soon the lexical scope ends.
 By default, L<Importer::Zim> looks at package variables
 C<@EXPORT>, C<@EXPORT_OK> and C<%EXPORT_TAGS> to decide
 what are exportable subroutines. It tries its best to implement
-a behavior akin to L<Exporter> without the corresponding package polution.
+a behavior akin to L<Exporter> without the corresponding namespace pollution.
 
 =head1 METHODS
 
