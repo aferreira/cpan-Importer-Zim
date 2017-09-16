@@ -45,7 +45,7 @@ sub backend {
 
     use Importer::Zim 'Foo' => { -version => '3.0' } => 'foo';
 
-    use Importer::Zim 'SpaceTime::Machine' => 'robot', 'rubber_pig';
+    use Importer::Zim 'SpaceTime::Machine' => [qw(robot rubber_pig)];
 
 =head1 DESCRIPTION
 
