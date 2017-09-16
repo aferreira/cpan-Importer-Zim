@@ -12,7 +12,7 @@ sub import {
 }
 
 my %MIN_VERSION = do {
-    my %v = ( '+Lexical' => '0.4.0', );
+    my %v = ( '+Lexical' => '0.5.0', );
     /^\+/ and $v{ backend_class($_) } = $v{$_} for keys %v;
     %v;
 };
