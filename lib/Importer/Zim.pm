@@ -25,7 +25,7 @@ sub backend_class {
 }
 
 sub backend {
-    my $how = ( ref $_[2] ? $_[2]->{-how} : undef ) // '+Lexical';
+    my $how = ( ref $_[2] eq 'HASH' ? $_[2]->{-how} : undef ) // '+Lexical';
     my $backend = backend_class($how);
     my @version
       = exists $MIN_VERSION{$backend} ? ( $MIN_VERSION{$backend} ) : ();
