@@ -43,7 +43,7 @@ Now with an array ref:
 
 Notice that array refs are supposed to contain
 only subroutine names. If you put a C<:tag> in there,
-it will likely fail such as
+it will likely fail, just like
 
     use zim 'Mango::BSON' => [':bson'];
 
@@ -64,15 +64,15 @@ etc.
 
 =head2 Importing a subroutine not declared as exported
 
+Because you know what you're doing.
+
     use zim 'charnames' => { -strict => 0 } => 'vianame';
 
     use zim 'Sub::Inject' => { -strict => 0 } => 'sub_inject';
 
     use zim 'String::Truncate' => { -strict => 0 } => 'elide';
 
-Because you know what you're doing.
-
-Sometimes there are good reasons to do that, including
+There may be good reasons to do that, including
 
 =over 4
 
