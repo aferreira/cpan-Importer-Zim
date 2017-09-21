@@ -1,0 +1,156 @@
+
+=encoding utf8
+
+=head1 NAME
+
+Importer::Zim::Cookbook - Cooking imports à la Invader Zim
+
+=head1 RECIPES
+
+All these recipes use L<zim>, the abbreviation for L<Importer::Zim>.
+If you prefer non-pragma-looking names, suit yourself.
+
+=head2 Importing one subroutine
+
+    use zim 'Scalar::Util' => 'blessed';
+
+=head2 Importing a few subroutines
+
+    use zim 'List::Util' => qw(any all none notall);
+
+=head2 Importing a subroutine with a new name
+
+    use zim 'List::Util' => 'pairs' => { -as => 'kv' };
+
+=head2 Importing all subroutines under a tag
+
+    use zim 'Mango::BSON' => ':bson';
+
+Imports 18 subs (as of Mango 1.29), like C<bson_bin>,
+C<bson_code>, etc.
+
+=head2 Importing all subroutines exported by default
+
+    use zim 'Carp';
+
+Imports C<confess>, C<croak> and C<carp>.
+
+=head2 Importing a few subroutines (again)
+
+Now with an array ref:
+
+    use zim 'List::Util' => [qw(any all none notall)];
+
+Notice that array refs are supposed to contain
+only subroutine names. If you put a C<:tag> in there,
+it will likely fail such as
+
+    use zim 'Mango::BSON' => [':bson'];
+
+fails with
+
+    ":bson" is not exported by "Mango::BSON" at ...
+
+=head2 Importing subroutines with prefixed names
+
+    use zim 'Mango::BSON' => ':bson' => { -prefix => 'mango_' };
+
+Imports subs with names like C<mango_bson_bin>, C<mango_bson_code>,
+etc.
+
+=head2 Checking for minimum version
+
+    use zim 'List::Util' => { -version => '1.33' } => qw(any all none notall);
+
+=head2 Importing a subroutine not declared as exported
+
+    use zim 'charnames' => { -strict => 0 } => 'vianame';
+
+    use zim 'Sub::Inject' => { -strict => 0 } => 'sub_inject';
+
+    use zim 'String::Truncate' => { -strict => 0 } => 'elide';
+
+Because you know what you're doing.
+
+Sometimes there are good reasons to do that, including
+
+=over 4
+
+=item *
+
+to create a shortcut to a stable subroutine in other package
+
+=item *
+
+to bypass the lack of C<@EXPORT_OK> or C<@EXPORT>
+due to the use of exporters which don't set them
+(like L<Sub::Exporter>).
+
+=back
+
+=head2 Importing subroutines with crafted names
+
+    use zim 'Mango::BSON' => ':bson' => {
+        -map => sub { ( my $n = shift ) =~ s/^(bson_)/\U$1/; $n }
+    };
+
+This time, subs will be imported with names like
+C<BSON_bin>, C<BSON_code>, etc.
+
+=head2 Cherry-picking subroutines to import
+
+All different specifications of symbols to import mentioned above
+(subroutine names, tags, array refs) can be put together.
+
+    use zim 'Fcntl' => qw(:flock :seek S_ISUID);
+
+    use zim 'Mojo::Util' => [qw(b64_decode b64_encode)], 'trim';
+
+=head2 Writing a module with functions to be imported
+
+    package YourModule;
+    our @EXPORT_OK = qw(munge frobnicate);
+
+And the users of this module can say
+
+    use zim 'YourModule' => qw(frobnicate);
+    frobnicate($left, $right);
+
+=head2 Writing a module with many functions to be imported
+
+If there are too many symbols to be imported,
+for example tens of constants, it is a good idea
+to provide tags to name useful subsets of
+the imported symbols.
+
+    package YourModule;
+    our @EXPORT_OK   = qw(BIT1 BIT2 BIT3 BIT4 MASK1 MASK2 MASK3);
+    our %EXPORT_TAGS = (    #
+        bit  => [qw(BIT1 BIT2 BIT3 BIT4)],
+        mask => [qw(MASK1 MASK2 MASK3)]
+    );
+
+The users of such module can write
+
+    use zim 'YourModule' => qw(:bit :mask);
+    $mode = BIT1 | BIT3 | MASK1 | MASK3;
+
+=head2 Writing a module with default exports
+
+Default exports are defined at C<@EXPORT> package variables.
+When exporters were used and imported symbols were not automatically
+cleaned, default exports were not such a good idea.
+
+One of the best uses for default exports is to hold
+the list of symbols a user of your module is most likely
+to want available.
+
+This is the case of "encode" and "decode" subroutines in
+modules like L<JSON>, L<JSON::XS>, etc.
+
+    use zim 'JSON::XS';
+
+imports C<encode_json> and C<decode_json>, which is probably
+what you want while writing quick-and-dirty scripts.
+
+=cut
