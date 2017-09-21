@@ -91,7 +91,7 @@ due to the use of exporters which don't set them
 =head2 Importing subroutines with crafted names
 
     use zim 'Mango::BSON' => ':bson' => {
-        -map => sub { ( my $n = shift ) =~ s/^(bson_)/\U$1/; $n }
+        -map => sub { s/^(bson_)/\U$1/; $_ }
     };
 
 This time, subs will be imported with names like
