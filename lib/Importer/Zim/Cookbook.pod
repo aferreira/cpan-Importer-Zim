@@ -140,6 +140,7 @@ The users of such module can write
 Default exports are defined at C<@EXPORT> package variables.
 When exporters were used and imported symbols were not automatically
 cleaned, default exports were not such a good idea.
+(Read it: namespace pollution for free.)
 
 One of the best uses for default exports is to hold
 the list of symbols a user of your module is most likely
@@ -152,5 +153,10 @@ modules like L<JSON>, L<JSON::XS>, etc.
 
 imports C<encode_json> and C<decode_json>, which is probably
 what you want while writing quick-and-dirty scripts.
+
+=head2 From CamelCase to snake_case
+
+    use zim 'Mojo::Util' => 'decamelize';
+    use zim 'YAML' => [qw(LoadFile DumpFile)] => { -map => \&decamelize };
 
 =cut
