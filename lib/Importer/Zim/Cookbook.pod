@@ -1,6 +1,6 @@
 
 # PODNAME: Importer::Zim::Cookbook
-# ABSTRACT: Cooking imports E<agrave> la Invader Zim
+# ABSTRACT: Cooking imports à la Invader Zim
 
 =encoding utf8
 
