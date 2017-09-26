@@ -110,6 +110,8 @@ for get some diagnostics information printed to C<STDERR>.
 
 L<zim>
 
+L<Import::Zim::Cookbook>
+
 L<Importer> and L<Lexical::Importer>
 
 L<lexically>
