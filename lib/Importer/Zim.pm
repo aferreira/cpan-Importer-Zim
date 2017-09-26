@@ -92,6 +92,31 @@ C<@EXPORT>, C<@EXPORT_OK> and C<%EXPORT_TAGS> to decide
 what are exportable subroutines. It tries its best to implement
 a behavior akin to L<Exporter> without the corresponding namespace pollution.
 
+=head1 BACKENDS
+
+L<Importer::Zim> will try the following backends in order
+until one succeeds to load.
+
+=over 4
+
+=item *
+
+L<Importer::Zim::Lexical> - symbols are imported as lexical subroutines
+
+=item *
+
+L<Importer::Zim::EndOfScope> - symbols are imported to caller namespace
+while surrounding scope is compiled
+
+=item *
+
+L<Importer::Zim::Unit> - symbols are imported to caller namespace
+while current unit is compiled
+
+=back
+
+Read also L<Importer::Zim::Cookbook/WHAT BACKEND?>.
+
 =head1 METHODS
 
 =head2 import
