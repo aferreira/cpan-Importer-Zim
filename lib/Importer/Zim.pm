@@ -3,16 +3,23 @@ package Importer::Zim;
 
 # ABSTRACT: Import functions à la Invader Zim
 
-use 5.018;
+use 5.010001;
 use warnings;
+use Carp            ();
 use Module::Runtime ();
+
+use constant DEBUG => $ENV{IMPORTER_ZIM_DEBUG} || 0;
 
 sub import {
     shift->backend(@_)->import(@_);
 }
 
 my %MIN_VERSION = do {
-    my %v = ( '+Lexical' => '0.6.0', );
+    my %v = (
+        '+Lexical'    => '0.6.0',
+        '+EndOfScope' => '0.1.0',
+        '+Unit'       => '0.2.0'
+    );
     /^\+/ and $v{ backend_class($_) } = $v{$_} for keys %v;
     %v;
 };
@@ -25,11 +32,29 @@ sub backend_class {
 }
 
 sub backend {
-    my $how = ( ref $_[2] eq 'HASH' ? $_[2]->{-how} : undef ) // '+Lexical';
-    my $backend = backend_class($how);
-    my @version
-      = exists $MIN_VERSION{$backend} ? ( $MIN_VERSION{$backend} ) : ();
-    return &Module::Runtime::use_module( $backend, @version );
+    my @how = split ',',
+      ( ( ref $_[2] eq 'HASH' ? $_[2]->{-how} : undef )
+        // '+Lexical,+EndOfScope,+Unit' );
+    for my $how (@how) {
+        my $backend = backend_class($how);
+        my @version
+          = exists $MIN_VERSION{$backend} ? ( $MIN_VERSION{$backend} ) : ();
+        my $mod = eval { &Module::Runtime::use_module( $backend, @version ) };
+        _trace_backend( $mod, $backend, @version ) if DEBUG;
+        return $mod if $mod;
+    }
+    Carp::croak qq{Can't load no backend};
+}
+
+sub _trace_backend {
+    my ( $mod, $backend, $version ) = @_;
+    my $rv = $version ? " $version+" : '';
+    unless ($mod) {
+        warn qq{Failed to load "$backend"$rv backend.\n};
+        return;
+    }
+    my $v = $mod->VERSION // 'NA';
+    warn qq{Loaded "$backend"$rv ($v) backend.\n};
 }
 
 1;
@@ -73,6 +98,13 @@ a behavior akin to L<Exporter> without the corresponding namespace pollution.
 
     Importer::Zim->import($class => @imports);
     Importer::Zim->import($class => \%opts => @imports);
+
+=head1 DEBUGGING
+
+You can set the C<IMPORTER_ZIM_DEBUG> environment variable
+for get some diagnostics information printed to C<STDERR>.
+
+    IMPORTER_ZIM_DEBUG=1
 
 =head1 SEE ALSO
 
