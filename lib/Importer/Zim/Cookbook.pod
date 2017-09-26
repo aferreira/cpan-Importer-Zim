@@ -158,4 +158,19 @@ what you want while writing quick-and-dirty scripts.
     use zim 'Mojo::Util' => 'decamelize';
     use zim 'YAML' => [qw(LoadFile DumpFile)] => { -map => \&decamelize };
 
+=head1 WHICH BACKEND?
+
+The short answer to "What Importer::Zim backend should one use?"
+is L<Importer::Zim::Lexical>.
+
+However L<Importer::Zim::Lexical> requires perl 5.18 or newer,
+and a compiler will be needed to install the L<Sub::Inject>
+dependency.
+
+If you got an older perl, you might want to try
+L<Importer::Zim::EndOfScope> or L<Importer::Zim::Unit>.
+
+If you got no compiler to build XS dependencies,
+L<Importer::Zim::EndOfScope> may work.
+
 =cut
