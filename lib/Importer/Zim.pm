@@ -5,10 +5,9 @@ package Importer::Zim;
 
 use 5.010001;
 use warnings;
-use Carp            ();
 use Module::Runtime ();
 
-use constant DEBUG => $ENV{IMPORTER_ZIM_DEBUG} || 0;
+use Importer::Zim::Utils 0.8.0 qw(DEBUG carp croak);
 
 sub import {
     unshift @_, shift->backend(@_);
@@ -44,7 +43,7 @@ sub backend {
         _trace_backend( $mod, $backend, @version ) if DEBUG;
         return $mod if $mod;
     }
-    Carp::croak qq{Can't load no backend};
+    croak qq{Can't load no backend};
 }
 
 sub _trace_backend {
