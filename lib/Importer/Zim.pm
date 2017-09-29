@@ -43,7 +43,7 @@ sub backend {
         _trace_backend( $mod, $backend, @version ) if DEBUG;
         return $mod if $mod;
     }
-    croak qq{Can't load no backend};
+    croak qq{Can't load any backend};
 }
 
 sub _trace_backend {
