@@ -11,7 +11,8 @@ use Module::Runtime ();
 use constant DEBUG => $ENV{IMPORTER_ZIM_DEBUG} || 0;
 
 sub import {
-    shift->backend(@_)->import(@_);
+    unshift @_, shift->backend(@_);
+    goto &{ $_[0]->can('import') };
 }
 
 my %MIN_VERSION = do {
