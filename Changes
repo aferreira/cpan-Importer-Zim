@@ -3,6 +3,7 @@ Release history for Importer-Zim
 
 {{$NEXT}}
 
+    - Produce DEBUG message with carp()
     - goto backend->import() to report from the correct location
     - Require Importer::Zim::Utils 0.8.0+
 

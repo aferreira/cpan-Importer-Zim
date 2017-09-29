@@ -50,11 +50,11 @@ sub _trace_backend {
     my ( $mod, $backend, $version ) = @_;
     my $rv = $version ? " $version+" : '';
     unless ($mod) {
-        warn qq{Failed to load "$backend"$rv backend.\n};
+        carp qq{Failed to load "$backend"$rv backend};
         return;
     }
     my $v = $mod->VERSION // 'NA';
-    warn qq{Loaded "$backend"$rv ($v) backend.\n};
+    carp qq{Loaded "$backend"$rv ($v) backend};
 }
 
 1;
