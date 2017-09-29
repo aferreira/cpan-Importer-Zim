@@ -116,7 +116,7 @@ while current unit is compiled
 
 =back
 
-Read also L<Importer::Zim::Cookbook/WHAT BACKEND?>.
+Read also L<Importer::Zim::Cookbook/WHICH BACKEND?>.
 
 =head1 METHODS
 
