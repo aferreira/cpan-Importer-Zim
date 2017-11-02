@@ -3,6 +3,9 @@ Release history for Importer-Zim
 
 {{$NEXT}}
 
+    - Require +Bogus 0.9.0+
+    - Try +Bogus backend as last resort
+
 v0.6     2017-09-29 14:44:56-07:00 America/Los_Angeles
 
     - Produce DEBUG message with carp()
