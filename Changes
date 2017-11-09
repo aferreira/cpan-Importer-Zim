@@ -3,6 +3,8 @@ Release history for Importer-Zim
 
 {{$NEXT}}
 
+v0.8     2017-11-09 14:21:25-08:00 America/Los_Angeles
+
     - +Base gets loaded if import() gets called
     - From zim::import() to Import::Zim::Base::import_into()
     - export_to() function
