@@ -140,6 +140,13 @@ Read also L<Importer::Zim::Cookbook/WHICH BACKEND?>.
     Importer::Zim->import($class => @imports);
     Importer::Zim->import($class => \%opts => @imports);
 
+=head1 FUNCTIONS
+
+=head2 export_to
+
+    Importer::Zim::export_to($target, %imports);
+    Importer::Zim::export_to($target, \%imports);
+
 =head1 DEBUGGING
 
 You can set the C<IMPORTER_ZIM_DEBUG> environment variable
