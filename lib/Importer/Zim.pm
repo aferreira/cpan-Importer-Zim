@@ -6,12 +6,19 @@ package Importer::Zim;
 use 5.010001;
 use warnings;
 
-use Importer::Zim::Base 0.12.0 ();
 use Module::Runtime ();
 
 use Importer::Zim::Utils 0.8.0 qw(DEBUG carp croak);
 
-sub import {
+sub import {    # Load +Base if import() is called
+    require Importer::Zim::Base;
+    Importer::Zim::Base->VERSION('0.12.0');
+    no warnings 'redefine';
+    *import = \&_import;
+    goto &_import;
+}
+
+sub _import {
     unshift @_, shift->backend(@_);
     goto &Importer::Zim::Base::import_into;
 }

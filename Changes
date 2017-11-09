@@ -3,6 +3,7 @@ Release history for Importer-Zim
 
 {{$NEXT}}
 
+    - +Base gets loaded if import() gets called
     - From zim::import() to Import::Zim::Base::import_into()
     - export_to() function
     - Require +Base 0.12.0+
