@@ -5,21 +5,23 @@ package Importer::Zim;
 
 use 5.010001;
 use warnings;
+
+use Importer::Zim::Base 0.12.0 ();
 use Module::Runtime ();
 
 use Importer::Zim::Utils 0.8.0 qw(DEBUG carp croak);
 
 sub import {
     unshift @_, shift->backend(@_);
-    goto &{ $_[0]->can('import') };
+    goto &Importer::Zim::Base::import_into;
 }
 
 my %MIN_VERSION = do {
     my %v = (
-        '+Lexical'    => '0.9.0',
-        '+EndOfScope' => '0.3.0',
-        '+Unit'       => '0.4.0',
-        '+Bogus'      => '0.11.0',
+        '+Lexical'    => '0.10.0',
+        '+EndOfScope' => '0.4.0',
+        '+Unit'       => '0.5.0',
+        '+Bogus'      => '0.12.0',
     );
     /^\+/ and $v{ backend_class($_) } = $v{$_} for keys %v;
     %v;
