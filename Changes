@@ -5,6 +5,7 @@ Release history for Importer-Zim
 
     - Setup default backends with IMPORTER_ZIM_BACKEND
     - prereqs: Make +EndOfScope the fallback backend
+    - dist.ini: use @Author::FERREIRA bundle
 
 v0.8     2017-11-09 14:21:25-08:00 America/Los_Angeles
 
