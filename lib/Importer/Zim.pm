@@ -10,6 +10,11 @@ use Module::Runtime ();
 
 use Importer::Zim::Utils 0.8.0 qw(DEBUG carp croak);
 
+BEGIN {
+    my $v = $ENV{IMPORTER_ZIM_BACKEND} || '+Lexical,+EndOfScope,+Unit,+Bogus';
+    *DEFAULT_BACKEND = sub () {$v};
+}
+
 sub import {    # Load +Base if import() is called
     require Importer::Zim::Base;
     Importer::Zim::Base->VERSION('0.12.0');
@@ -43,8 +48,7 @@ sub backend_class {
 
 sub backend {
     my @how = split ',',
-      ( ( ref $_[2] eq 'HASH' ? $_[2]->{-how} : undef )
-        // '+Lexical,+EndOfScope,+Unit,+Bogus' );
+      ( ( ref $_[2] eq 'HASH' ? $_[2]->{-how} : undef ) // DEFAULT_BACKEND );
     for my $how (@how) {
         my $backend = backend_class($how);
         my @version
