@@ -17,7 +17,7 @@ BEGIN {
 
 sub import {    # Load +Base if import() is called
     require Importer::Zim::Base;
-    Importer::Zim::Base->VERSION('0.12.0');
+    Importer::Zim::Base->VERSION('0.12.1');
     no warnings 'redefine';
     *import = \&_import;
     goto &_import;
