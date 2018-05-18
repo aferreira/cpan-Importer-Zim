@@ -31,8 +31,8 @@ sub _import {
 my %MIN_VERSION = do {
     my %v = (
         '+Lexical'    => '0.10.0',
-        '+EndOfScope' => '0.4.0',
-        '+Unit'       => '0.5.0',
+        '+EndOfScope' => '0.5.0',
+        '+Unit'       => '0.6.0',
         '+Bogus'      => '0.12.0',
     );
     /^\+/ and $v{ backend_class($_) } = $v{$_} for keys %v;
