@@ -35,11 +35,11 @@ my %MIN_VERSION = do {
         '+Unit'       => '0.6.0',
         '+Bogus'      => '0.12.0',
     );
-    /^\+/ and $v{ backend_class($_) } = $v{$_} for keys %v;
+    /^\+/ and $v{ _backend_class($_) } = $v{$_} for keys %v;
     %v;
 };
 
-sub backend_class {
+sub _backend_class {
     my $how = shift;
     return ( $how =~ s/^\+// )
       ? ( __PACKAGE__ . '::' . $how )
@@ -53,7 +53,7 @@ sub _backend {
     return $BACKEND_FOR->{ $_[0] } if exists $BACKEND_FOR->{ $_[0] };
     my @how = split ',', length $_[0] ? $_[0] : DEFAULT_BACKEND;
     for my $how (@how) {
-        my $backend = backend_class($how);
+        my $backend = _backend_class($how);
         my @version
           = exists $MIN_VERSION{$backend} ? ( $MIN_VERSION{$backend} ) : ();
         my $mod = eval { &Module::Runtime::use_module( $backend, @version ) };
