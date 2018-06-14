@@ -46,16 +46,19 @@ sub backend_class {
       : $how;
 }
 
-sub backend {
-    my @how = split ',',
-      ( ( ref $_[2] eq 'HASH' ? $_[2]->{-how} : undef ) // DEFAULT_BACKEND );
+sub backend { _backend( ref $_[2] eq 'HASH' ? $_[2]{-how} // '' : '' ) }
+
+sub _backend {
+    state $BACKEND_FOR;
+    return $BACKEND_FOR->{ $_[0] } if exists $BACKEND_FOR->{ $_[0] };
+    my @how = split ',', length $_[0] ? $_[0] : DEFAULT_BACKEND;
     for my $how (@how) {
         my $backend = backend_class($how);
         my @version
           = exists $MIN_VERSION{$backend} ? ( $MIN_VERSION{$backend} ) : ();
         my $mod = eval { &Module::Runtime::use_module( $backend, @version ) };
         _trace_backend( $mod, $backend, @version ) if DEBUG;
-        return $mod if $mod;
+        return $BACKEND_FOR->{ $_[0] } = $mod if $mod;
     }
     croak qq{Can't load any backend};
 }
