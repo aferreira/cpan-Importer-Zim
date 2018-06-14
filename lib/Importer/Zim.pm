@@ -15,19 +15,6 @@ BEGIN {
     *DEFAULT_BACKEND = sub () {$v};
 }
 
-sub import {    # Load +Base if import() is called
-    require Importer::Zim::Base;
-    Importer::Zim::Base->VERSION('0.12.1');
-    no warnings 'redefine';
-    *import = \&_import;
-    goto &_import;
-}
-
-sub _import {
-    unshift @_, shift->backend(@_);
-    goto &Importer::Zim::Base::import_into;
-}
-
 my %MIN_VERSION = do {
     my %v = (
         '+Lexical'    => '0.10.0',
@@ -39,9 +26,19 @@ my %MIN_VERSION = do {
     %v;
 };
 
-sub _backend_class { $_[0] =~ s/^\+// ? __PACKAGE__ . '::' . $_[0] : $_[0] }
-
 sub backend { _backend( ref $_[2] eq 'HASH' ? $_[2]{-how} // '' : '' ) }
+
+sub export_to { goto &{ __PACKAGE__->backend->can('export_to') } }
+
+sub import {    # Load +Base if import() is called
+    require Importer::Zim::Base;
+    Importer::Zim::Base->VERSION('0.12.1');
+    no warnings 'redefine';
+    *import = \&_import;
+    goto &_import;
+}
+
+sub _backend_class { $_[0] =~ s/^\+// ? __PACKAGE__ . '::' . $_[0] : $_[0] }
 
 sub _backend {
     state $BACKEND_FOR;
@@ -58,7 +55,10 @@ sub _backend {
     croak qq{Can't load any backend};
 }
 
-sub export_to { goto &{ __PACKAGE__->backend->can('export_to') } }
+sub _import {
+    unshift @_, shift->backend(@_);
+    goto &Importer::Zim::Base::import_into;
+}
 
 sub _trace_backend {
     my ( $mod, $backend, $version ) = @_;
