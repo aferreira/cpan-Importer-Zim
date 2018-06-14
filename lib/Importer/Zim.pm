@@ -71,7 +71,7 @@ sub _trace_backend {
     carp qq{Loaded "$backend"$rv ($v) backend};
 }
 
-no Importer::Zim::Utils qw(DEBUG carp);
+no Importer::Zim::Utils qw(DEBUG carp croak);
 
 1;
 
