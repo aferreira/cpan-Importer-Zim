@@ -41,9 +41,7 @@ my %MIN_VERSION = do {
 
 sub _backend_class {
     my $how = shift;
-    return ( $how =~ s/^\+// )
-      ? ( __PACKAGE__ . '::' . $how )
-      : $how;
+    return $how =~ s/^\+// ? __PACKAGE__ . '::' . $how : $how;
 }
 
 sub backend { _backend( ref $_[2] eq 'HASH' ? $_[2]{-how} // '' : '' ) }
