@@ -1,7 +1,7 @@
 
 package Importer::Zim;
 
-# ABSTRACT: Import functions à la Invader Zim
+# ABSTRACT: Import functions without namespace pollution
 
 use 5.010001;
 use warnings;
@@ -95,13 +95,15 @@ no Importer::Zim::Utils qw(DEBUG carp croak);
      – Zim
 
 This pragma imports subroutines from other modules in a clean way.
-"Clean imports" here mean that the import symbols are available
-only at some scope.
+"Clean imports" here mean that the imported symbols will
+be available for compilation and will not pollute
+the user namespace at runtime.
 
 L<Importer::Zim> relies on pluggable backends which give a precise
-meaning to "available at some scope". For example,
-L<Importer::Zim::Lexical> creates lexical subs that go away
-as soon the lexical scope ends.
+meaning to "clean imports". For example,
+L<Importer::Zim::Lexical> uses lexical subs that are bound
+to the surrounding lexical scope and never touch the target
+namespace.
 
 By default, L<Importer::Zim> looks at package variables
 C<@EXPORT>, C<@EXPORT_OK> and C<%EXPORT_TAGS> to decide
@@ -150,7 +152,7 @@ Read also L<Importer::Zim::Cookbook/WHICH BACKEND?>.
 =head1 DEBUGGING
 
 You can set the C<IMPORTER_ZIM_DEBUG> environment variable
-for get some diagnostics information printed to C<STDERR>.
+to get some diagnostics information printed to C<STDERR>.
 
     IMPORTER_ZIM_DEBUG=1
 
