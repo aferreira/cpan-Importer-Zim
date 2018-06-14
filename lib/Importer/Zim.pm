@@ -39,10 +39,7 @@ my %MIN_VERSION = do {
     %v;
 };
 
-sub _backend_class {
-    my $how = shift;
-    return $how =~ s/^\+// ? __PACKAGE__ . '::' . $how : $how;
-}
+sub _backend_class { $_[0] =~ s/^\+// ? __PACKAGE__ . '::' . $_[0] : $_[0] }
 
 sub backend { _backend( ref $_[2] eq 'HASH' ? $_[2]{-how} // '' : '' ) }
 
@@ -61,9 +58,7 @@ sub _backend {
     croak qq{Can't load any backend};
 }
 
-sub export_to {
-    goto &{ __PACKAGE__->backend->can('export_to') };
-}
+sub export_to { goto &{ __PACKAGE__->backend->can('export_to') } }
 
 sub _trace_backend {
     my ( $mod, $backend, $version ) = @_;
