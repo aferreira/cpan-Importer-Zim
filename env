@@ -1,0 +1,15 @@
+#!/bin/bash
+
+PERL_VERSION=perl-5.24.1
+PERLBREW_LIB=dzil
+
+eval "$(perlbrew env $PERL_VERSION@$PERLBREW_LIB)"
+PATH=$PERLBREW_PATH:$PATH
+
+ROOT=$( cd $(dirname $0) ; /bin/pwd )
+PERL5LIB=$ROOT/lib:$ROOT/inc/lib/perl5:$PERL5LIB
+PATH=inc/bin:$PATH
+
+export PERL_CPANM_OPT="-l $ROOT/inc"
+
+exec ${1+"$@"}
